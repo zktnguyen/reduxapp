@@ -1,9 +1,24 @@
 
-export default function booksReducers(state={books:[]}, action) {
+export default function booksReducers(state={
+        books:[{
+          id: 1,
+          title: 'this is the book title',
+          description: 'this is the book description',
+          price: 33.33
+        },
+        {
+          id: 2,
+          title: 'this is the second book title',
+          description: 'this is the second book description',
+          price: 55
+        }
+      ]}, action) {
   let currentBook = [];
   let index = -1;
   let newBook = {};
   switch(action.type) {
+    case 'GET_BOOKS':
+      return {...state, books: [...state.books] };
     case 'POST_BOOK':
       return { books: [...state.books, ...action.payload] };
     case 'DELETE_BOOK':

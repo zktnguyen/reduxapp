@@ -1,3 +1,8 @@
+
+export const getBooks = () => ({
+  type: 'GET_BOOKS',
+});
+
 export const postBooks = (book) => ({
     type: 'POST_BOOK',
     payload: book
