@@ -1,13 +1,13 @@
 
 export default function booksReducers(state={
         books:[{
-          id: 1,
+          _id: 1,
           title: 'this is the book title',
           description: 'this is the book description',
           price: 33.33
         },
         {
-          id: 2,
+          _id: 2,
           title: 'this is the second book title',
           description: 'this is the second book description',
           price: 55
@@ -25,13 +25,13 @@ export default function booksReducers(state={
       currentBook = [...state.books];
       // Determine at which index in booksarray is the book to be deleted
       index = currentBook.findIndex(book => 
-        book.id === action.payload.id);
+        book._id === action.payload._id);
       
       return { books: [ ...currentBook.slice(0,index), 
                       ...currentBook.slice(index + 1)] };
     case 'UPDATE_BOOK':
         currentBook = [...state.books];
-        index = currentBook.findIndex(book => book.id === action.payload.id);
+        index = currentBook.findIndex(book => book._id === action.payload._id);
         newBook = { ...currentBook[index], title: action.payload.title };
         return { books: [ ...currentBook.slice(0,index), newBook,
           ...currentBook.slice(index + 1)] };

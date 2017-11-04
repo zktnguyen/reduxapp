@@ -5,6 +5,7 @@ import { Grid, Col, Row, Button } from 'react-bootstrap';
 
 import BookItem from './bookItem';
 import BooksForm from './booksForm';
+import Cart from './cart';
 import { getBooks } from '../../actions/booksActions';
 
 class BooksList extends Component {
@@ -16,9 +17,9 @@ class BooksList extends Component {
   render() {
     const booksList = this.props.books.map((book) => {
       return (
-        <Col xs={12} sm={6} md={4} key={book.id}>
+        <Col xs={12} sm={6} md={4} key={book._id}>
           <BookItem 
-                  id={book.id}
+                  _id={book._id}
                   title={book.title}
                   description={book.description}
                   price={book.price} 
@@ -28,12 +29,16 @@ class BooksList extends Component {
     })
     return (
       <Grid>
+        <Row>
+          <Cart/>
+        </Row>
         <Row style={{marginTop: '15px'}}>
           <Col xs={12} sm={6} >
             <BooksForm />
           </Col>
           {booksList}
         </Row>
+
       </Grid>
     )
   }

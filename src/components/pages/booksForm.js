@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Well, Panel, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { findDOMNode } from 'react-dom';
 
 import { postBooks } from '../../actions/booksActions';
 
