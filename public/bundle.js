@@ -711,15 +711,19 @@ var _reducers2 = _interopRequireDefault(_reducers);
 
 var _booksActions = __webpack_require__(27);
 
+var _cartActions = __webpack_require__(29);
+
+var _cartActions2 = _interopRequireDefault(_cartActions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // STEP 1 create the store
 
 
-// STEP 3 Define reducers
+// IMPORT actions
 var middleware = (0, _redux.applyMiddleware)(_reduxLogger2.default);
 
-// IMPORT actions
+// STEP 3 Define reducers
 
 var store = (0, _redux.createStore)(_reducers2.default, middleware);
 
@@ -742,6 +746,9 @@ store.dispatch((0, _booksActions.updateBooks)({
   id: 2,
   title: 'Learn React in 24h'
 }));
+
+// ADD TO CART
+store.dispatch((0, _cartActions2.default)([{ id: 2 }]));
 
 /***/ }),
 /* 8 */
@@ -1370,13 +1377,18 @@ var _booksReducers = __webpack_require__(25);
 
 var _booksReducers2 = _interopRequireDefault(_booksReducers);
 
+var _cartReducers = __webpack_require__(28);
+
+var _cartReducers2 = _interopRequireDefault(_cartReducers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _redux.combineReducers)({
-  books: _booksReducers2.default
-});
-
 // Import reducers to be combined
+
+exports.default = (0, _redux.combineReducers)({
+  books: _booksReducers2.default,
+  cart: _cartReducers2.default
+});
 
 /***/ }),
 /* 25 */
@@ -1463,6 +1475,50 @@ var updateBooks = exports.updateBooks = function updateBooks(book) {
         payload: book
     };
 };
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = cartReducers;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function cartReducers() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { cart: [] };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'ADD_TO_CART':
+      return { cart: [].concat(_toConsumableArray(state.cart), _toConsumableArray(action.payload)) };
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addToCart;
+function addToCart(book) {
+  return {
+    type: 'ADD_TO_CART',
+    payload: book
+  };
+}
 
 /***/ })
 /******/ ]);

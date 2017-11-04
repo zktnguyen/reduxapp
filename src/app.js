@@ -7,6 +7,8 @@ import reducers from './reducers';
 
 // IMPORT actions
 import { postBooks, deleteBooks, updateBooks } from './actions/booksActions';
+import addToCart from './actions/cartActions';
+
 // STEP 1 create the store
 const middleware = applyMiddleware(logger);
 const store = createStore(reducers, middleware);
@@ -34,3 +36,6 @@ store.dispatch(updateBooks({
   id: 2,
   title: 'Learn React in 24h'
 }));
+
+// ADD TO CART
+store.dispatch(addToCart([{ id: 2 }]));
