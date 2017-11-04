@@ -4,15 +4,16 @@ import logger from 'redux-logger';
 
 // STEP 3 Define reducers
 import reducers from './reducers';
+
+// IMPORT actions
+import { postBooks, deleteBooks, updateBooks } from './actions/booksActions';
 // STEP 1 create the store
 const middleware = applyMiddleware(logger);
 const store = createStore(reducers, middleware);
 
 
 // STEP 2 create and dispatch actions
-store.dispatch({
-  type: 'POST_BOOK',
-  payload: [{
+store.dispatch(postBooks([{
       id: 1,
       title: 'this is the book title',
       description: 'this is the book description',
@@ -24,20 +25,12 @@ store.dispatch({
       description: 'this is the second book description',
       price: 33.33
     }
-  ]
-});
+  ])
+);
 
-store.dispatch({
-  type: 'DELETE_BOOK',
-  payload: {
-    id: 1
-  }
-});
+store.dispatch(deleteBooks({ id: 1 }));
 
-store.dispatch({
-  type: 'UPDATE_BOOK',
-  payload: {
-    id: 2,
-    title: 'Learn React in 24h'
-  }
-});
+store.dispatch(updateBooks({
+  id: 2,
+  title: 'Learn React in 24h'
+}));
