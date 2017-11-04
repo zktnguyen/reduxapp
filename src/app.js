@@ -1,23 +1,13 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
 
 
 // STEP 3 Define reducers
-const reducer = (state=[], action) => {
-  switch(action.type) {
-    case 'POST_BOOK':
-      state = action.payload;
-      return state;
-    default:
-      return state;
-  }
-
-}
+import reducers from './reducers';
 // STEP 1 create the store
-const store = createStore(reducer);
+const middleware = applyMiddleware(logger);
+const store = createStore(reducers, middleware);
 
-store.subscribe(() => {
-  console.log('current state is: ', store.getState());
-});
 
 // STEP 2 create and dispatch actions
 store.dispatch({
@@ -35,4 +25,19 @@ store.dispatch({
       price: 33.33
     }
   ]
-})
+});
+
+store.dispatch({
+  type: 'DELETE_BOOK',
+  payload: {
+    id: 1
+  }
+});
+
+store.dispatch({
+  type: 'UPDATE_BOOK',
+  payload: {
+    id: 2,
+    title: 'Learn React in 24h'
+  }
+});
