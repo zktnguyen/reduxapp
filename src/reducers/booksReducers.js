@@ -26,7 +26,7 @@ export default function booksReducers(state={
       // Determine at which index in booksarray is the book to be deleted
       index = currentBook.findIndex(book => 
         book._id === action.payload._id);
-      
+
       return { books: [ ...currentBook.slice(0,index), 
                       ...currentBook.slice(index + 1)] };
     case 'UPDATE_BOOK':

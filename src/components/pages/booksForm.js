@@ -3,14 +3,17 @@ import { Well, Panel, FormGroup, ControlLabel, FormControl, Button } from 'react
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { postBooks } from '../../actions/booksActions';
+import { postBooks, deleteBooks } from '../../actions/booksActions';
 
 class BooksForm extends Component {
   
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteBook = this.deleteBook.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.deleteBook = this.deleteBook.bind(this);
   }
 
   state = {
@@ -18,7 +21,8 @@ class BooksForm extends Component {
       title: '',
       description: '',
       price: 0
-    }
+    },
+    toDelete: -23
   };
 
   onChange = e => {
@@ -26,9 +30,14 @@ class BooksForm extends Component {
     if (e.target.name === 'price') value = parseInt(e.target.value, 10);
     else value = e.target.value; 
     this.setState({
-    data: {...this.state.data, [e.target.name]: value }
-  });
-}
+      data: {...this.state.data, [e.target.name]: value }
+    });
+  }
+
+  onSelect(e) {
+    console.log(e.target.value);
+    this.setState( { toDelete: parseInt(e.target.value,10) } );
+  }
 
   handleSubmit() {
     const title = this.state.data.title;
@@ -40,8 +49,16 @@ class BooksForm extends Component {
     this.props.postBooks(book);
   }
 
+  
+
+  deleteBook() {
+    this.props.deleteBooks(this.state.toDelete);
+  }
+
   render() {
-    const { data } = this.state;
+    const { data, toDelete } = this.state;
+    const booksList = this.props.books.map((book) => 
+    (<option key={book._id} value={book._id}>{book._id}</option>), this);
     return (
       <Well>
         <Panel>
@@ -77,13 +94,30 @@ class BooksForm extends Component {
           </FormGroup>
           <Button onClick={ this.handleSubmit } bsStyle='primary'>Save book</Button>
         </Panel>
+        <Panel style={{marginTop:'25px'}}>
+          <FormGroup controlId="formControlsSelect">
+            <ControlLabel>Select a book id to delete</ControlLabel>
+            <FormControl componentClass="select" placeholder="select" 
+            value={toDelete} onChange={this.onSelect}>
+              <option value="select">select</option>
+              {booksList}
+            </FormControl>
+          </FormGroup>
+          <Button onClick={this.deleteBook} bsStyle='danger'>Delete book</Button>
+        </Panel>
       </Well>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ postBooks }, dispatch);
+function mapStateToProps(state) {
+  return {
+    books: state.books.books
+  }
 }
 
-export default connect(null, mapDispatchToProps)(BooksForm);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ postBooks, deleteBooks }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BooksForm);

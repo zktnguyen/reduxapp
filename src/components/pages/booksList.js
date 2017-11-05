@@ -29,6 +29,7 @@ class BooksList extends Component {
     })
     return (
       <Grid>
+        <h1>Book List</h1>
         <Row>
           <Cart/>
         </Row>

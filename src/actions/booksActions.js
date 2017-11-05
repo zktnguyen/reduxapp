@@ -8,9 +8,9 @@ export const postBooks = (book) => ({
     payload: book
   });
 
-export const deleteBooks = (id) => ({
+export const deleteBooks = (_id) => ({
     type: 'DELETE_BOOK',
-    payload: id
+    payload: { _id }
   });
 
 export const updateBooks = (book) => ({
